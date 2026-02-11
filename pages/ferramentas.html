@@ -1043,6 +1043,54 @@
     <script>
         // Vercel Web Analytics Configuration
         window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments) };
+         // ===== VERCEL ANALYTICS TRACKING =====
+        // Track button clicks
+        document.querySelectorAll('.btn-primary, .btn-secondary, .btn-whatsapp').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (window.va) {
+                    window.va('event', {
+                        name: 'Clique em CTA',
+                        data: { button: this.textContent.trim() }
+                    });
+                }
+            });
+        });
+
+        // Track scroll depth
+        let maxScroll = 0;
+        window.addEventListener('scroll', function() {
+            const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            if (scrollPercentage > maxScroll) {
+                maxScroll = scrollPercentage;
+            }
+        });
+
+        // Track page scroll on leave
+        window.addEventListener('beforeunload', function() {
+            if (window.va) {
+                window.va('event', {
+                    name: 'Profundidade de Scroll',
+                    data: { percentage: Math.round(maxScroll) }
+                });
+            }
+        });
+
+        // Track section views
+        document.querySelectorAll('section').forEach(section => {
+            const sectionObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && window.va) {
+                        window.va('event', {
+                            name: 'Visualizou Seção',
+                            data: { section: entry.target.id || 'sem-id' }
+                        });
+                        sectionObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            sectionObserver.observe(section);
+        });
     </script>
 </body>
 </html>
