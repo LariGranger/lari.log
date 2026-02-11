@@ -161,7 +161,6 @@
             height: 450px;
         }
 
-        /* Círculo gradiente de fundo */
         .gradient-circle {
             position: absolute;
             width: 420px;
@@ -172,7 +171,6 @@
             z-index: 1;
         }
 
-        /* Laptop ilustrado */
         .laptop-illustration {
             position: relative;
             z-index: 10;
@@ -215,7 +213,6 @@
             width: 85%;
         }
 
-        /* Ícones flutuantes ao redor */
         .floating-icon {
             position: absolute;
             width: 70px;
@@ -242,7 +239,6 @@
         .icon-3 { bottom: 70px; right: 40px; animation-delay: 1s; }
         .icon-4 { bottom: 20px; left: 30px; animation-delay: 1.5s; }
 
-        /* Planta decorativa */
         .plant {
             position: absolute;
             bottom: -10px;
@@ -369,6 +365,76 @@
             background: linear-gradient(135deg, #6B5B95 0%, #8B6BB8 100%);
         }
 
+        /* Estilo especial para o card de mulheres na ciência */
+        .highlight-image.science-women {
+            background: linear-gradient(135deg, #C84B9E 0%, #7B2D8B 50%, #4A1570 100%);
+        }
+
+        .highlight-image.science-women::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 70%, rgba(255, 180, 220, 0.2) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 20%, rgba(180, 100, 255, 0.2) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .science-stars {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .science-stars span {
+            position: absolute;
+            display: block;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .science-stars span:nth-child(1)  { top: 15%; left: 10%; animation-delay: 0s; }
+        .science-stars span:nth-child(2)  { top: 25%; left: 80%; animation-delay: 0.3s; }
+        .science-stars span:nth-child(3)  { top: 60%; left: 20%; animation-delay: 0.7s; }
+        .science-stars span:nth-child(4)  { top: 45%; left: 70%; animation-delay: 1.1s; }
+        .science-stars span:nth-child(5)  { top: 80%; left: 55%; animation-delay: 0.5s; }
+        .science-stars span:nth-child(6)  { top: 10%; left: 45%; animation-delay: 1.4s; }
+        .science-stars span:nth-child(7)  { top: 70%; left: 85%; animation-delay: 0.9s; }
+        .science-stars span:nth-child(8)  { top: 35%; left: 35%; animation-delay: 1.8s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50%       { opacity: 1;   transform: scale(1.6); }
+        }
+
+        .science-icon-group {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .science-emojis {
+            display: flex;
+            gap: 0.6rem;
+            font-size: 2.2rem;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+        }
+
+        .science-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.85);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
         .highlight-badge {
             position: absolute;
             top: 1.2rem;
@@ -380,6 +446,10 @@
             font-size: 0.75rem;
             font-weight: 700;
             z-index: 5;
+        }
+
+        .highlight-badge.badge-rosa {
+            color: #C84B9E;
         }
 
         .highlight-illustration {
@@ -436,6 +506,9 @@
             align-items: center;
             gap: 0.4rem;
             transition: gap 0.3s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
         }
 
         .read-more:hover {
@@ -470,171 +543,292 @@
             line-height: 1.6;
         }
 
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 8, 30, 0.65);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 18px;
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 32px 80px rgba(91, 46, 255, 0.2), 0 8px 24px rgba(0,0,0,0.12);
+            transform: translateY(24px) scale(0.98);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+            opacity: 0;
+            scrollbar-width: thin;
+            scrollbar-color: #e0e0e0 transparent;
+        }
+
+        .modal::-webkit-scrollbar { width: 5px; }
+        .modal::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-header {
+            position: relative;
+            height: 220px;
+            background: linear-gradient(135deg, #C84B9E 0%, #7B2D8B 50%, #4A1570 100%);
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 80%, rgba(255, 180, 220, 0.25) 0%, transparent 55%),
+                        radial-gradient(ellipse at 85% 15%, rgba(180, 100, 255, 0.25) 0%, transparent 50%);
+        }
+
+        .modal-header-stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .modal-header-stars span {
+            position: absolute;
+            display: block;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .modal-header-stars span:nth-child(1)  { top: 12%; left: 8%;  animation-delay: 0s; }
+        .modal-header-stars span:nth-child(2)  { top: 20%; left: 75%; animation-delay: 0.4s; }
+        .modal-header-stars span:nth-child(3)  { top: 55%; left: 90%; animation-delay: 0.8s; }
+        .modal-header-stars span:nth-child(4)  { top: 35%; left: 50%; animation-delay: 1.2s; }
+        .modal-header-stars span:nth-child(5)  { top: 70%; left: 30%; animation-delay: 0.6s; }
+        .modal-header-stars span:nth-child(6)  { top: 8%;  left: 40%; animation-delay: 1.6s; }
+        .modal-header-stars span:nth-child(7)  { top: 50%; left: 15%; animation-delay: 1s; }
+        .modal-header-stars span:nth-child(8)  { top: 80%; left: 65%; animation-delay: 0.2s; }
+        .modal-header-stars span:nth-child(9)  { top: 25%; left: 92%; animation-delay: 1.9s; }
+        .modal-header-stars span:nth-child(10) { top: 65%; left: 5%;  animation-delay: 1.3s; }
+
+        .modal-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.35rem;
+            color: white;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.35);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+        }
+
+        .modal-date {
+            font-size: 0.78rem;
+            color: var(--cinza-texto);
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .modal-intro {
+            font-size: 1rem;
+            color: var(--cinza-texto);
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .modal-scientist {
+            margin-bottom: 2rem;
+            padding: 1.6rem;
+            background: #FAFAFA;
+            border-radius: 12px;
+            border-left: 4px solid #C84B9E;
+        }
+
+        .modal-scientist h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.2px;
+        }
+
+        .modal-scientist .scientist-subtitle {
+            font-size: 0.8rem;
+            color: #C84B9E;
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .modal-scientist p {
+            font-size: 0.93rem;
+            color: var(--cinza-texto);
+            line-height: 1.7;
+        }
+
+        .modal-conclusion {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(200, 75, 158, 0.06) 0%, rgba(123, 45, 139, 0.06) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(200, 75, 158, 0.15);
+        }
+
+        .modal-conclusion h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 1rem;
+        }
+
+        .modal-conclusion p {
+            font-size: 0.92rem;
+            color: var(--cinza-texto);
+            line-height: 1.75;
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-conclusion p:last-child {
+            margin-bottom: 0;
+            font-weight: 500;
+            color: #7B2D8B;
+        }
+
         /* ============ RESPONSIVIDADE ============ */
         @media (max-width: 1200px) {
-            .features {
-                gap: 2rem;
-                padding: 3rem 2rem;
-            }
-
-            .hero {
-                padding: 3rem 2rem;
-                gap: 2rem;
-            }
-
-            .recent-section {
-                padding: 3rem 2rem;
-            }
-
-            .final-cta {
-                padding: 3rem 2rem;
-            }
+            .features { gap: 2rem; padding: 3rem 2rem; }
+            .hero { padding: 3rem 2rem; gap: 2rem; }
+            .recent-section { padding: 3rem 2rem; }
+            .final-cta { padding: 3rem 2rem; }
         }
 
         @media (max-width: 1024px) {
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 3rem 2rem;
-            }
-
-            .hero-content h1 {
-                font-size: 2.4rem;
-            }
-
-            .hero-illustration {
-                height: 350px;
-            }
-
-            .gradient-circle {
-                width: 350px;
-                height: 350px;
-            }
-
-            .laptop-illustration {
-                width: 300px;
-                height: 230px;
-            }
-
-            .features {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .highlight-card {
-                grid-template-columns: 280px 1fr;
-            }
-
-            .highlight-image {
-                height: 240px;
-            }
+            .hero { grid-template-columns: 1fr; padding: 3rem 2rem; }
+            .hero-content h1 { font-size: 2.4rem; }
+            .hero-illustration { height: 350px; }
+            .gradient-circle { width: 350px; height: 350px; }
+            .laptop-illustration { width: 300px; height: 230px; }
+            .features { grid-template-columns: repeat(2, 1fr); }
+            .highlight-card { grid-template-columns: 280px 1fr; }
+            .highlight-image { height: 240px; }
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 1rem 1.5rem;
-            }
-
-            .nav-links {
-                gap: 1.5rem;
-                font-size: 0.85rem;
-            }
-
-            .logo {
-                font-size: 1.1rem;
-            }
-
-            .hero-content h1 {
-                font-size: 1.9rem;
-            }
-
-            .hero-illustration {
-                height: 280px;
-            }
-
-            .gradient-circle {
-                width: 280px;
-                height: 280px;
-            }
-
-            .laptop-illustration {
-                width: 240px;
-                height: 180px;
-            }
-
-            .floating-icon {
-                width: 55px;
-                height: 55px;
-                font-size: 1.5rem;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-                padding: 2rem 1.5rem;
-            }
-
-            .recent-section {
-                padding: 2rem 1.5rem;
-            }
-
-            .recent-section h2 {
-                font-size: 1.5rem;
-                margin-bottom: 2rem;
-            }
-
-            .highlight-card {
-                grid-template-columns: 1fr;
-            }
-
-            .highlight-image {
-                height: 200px;
-            }
-
-            .final-cta {
-                padding: 2rem 1.5rem;
-            }
-
-            .final-cta h2 {
-                font-size: 1.5rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { gap: 1.5rem; font-size: 0.85rem; }
+            .logo { font-size: 1.1rem; }
+            .hero-content h1 { font-size: 1.9rem; }
+            .hero-illustration { height: 280px; }
+            .gradient-circle { width: 280px; height: 280px; }
+            .laptop-illustration { width: 240px; height: 180px; }
+            .floating-icon { width: 55px; height: 55px; font-size: 1.5rem; }
+            .features { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
+            .recent-section { padding: 2rem 1.5rem; }
+            .recent-section h2 { font-size: 1.5rem; margin-bottom: 2rem; }
+            .highlight-card { grid-template-columns: 1fr; }
+            .highlight-image { height: 200px; }
+            .final-cta { padding: 2rem 1.5rem; }
+            .final-cta h2 { font-size: 1.5rem; }
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .modal-body { padding: 1.5rem; }
+            .modal-header { height: 180px; padding: 1.5rem; }
+            .modal-header h2 { font-size: 1.1rem; }
         }
 
         /* ============ ANIMAÇÕES ============ */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        .hero-content {
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero-illustration {
-            animation: fadeInUp 0.8s ease 0.2s backwards;
-        }
+        .hero-content    { animation: fadeInUp 0.8s ease; }
+        .hero-illustration { animation: fadeInUp 0.8s ease 0.2s backwards; }
     </style>
 </head>
 <body>
+
     <!-- NAVEGAÇÃO -->
     <nav>
         <a href="index.html" class="logo">lari<span class="roxo">.log</span></a>
- <ul class="nav-links">
+        <ul class="nav-links">
             <li><a href="/index.html" class="active">Início</a></li>
             <li><a href="pages/ferramentas.html">Ferramentas</a></li>
             <li><a href="pages/estudos.html">Estudos</a></li>
             <li><a href="pages/templates.html">Templates</a></li>
+            <li><a href="pages/blog.html">Blog</a></li>
             <li><a href="#">Sobre</a></li>
         </ul>
         <button class="btn-header">Baixar checklist grátis</button>
@@ -651,8 +845,6 @@
 
         <div class="hero-illustration">
             <div class="gradient-circle"></div>
-            
-            <!-- Laptop com código -->
             <div class="laptop-illustration">
                 <div class="laptop-screen">
                     <div class="code-line"></div>
@@ -663,14 +855,10 @@
                     <div class="code-line"></div>
                 </div>
             </div>
-
-            <!-- Ícones flutuantes -->
             <div class="floating-icon icon-1">📋</div>
             <div class="floating-icon icon-2">💚</div>
             <div class="floating-icon icon-3">📊</div>
             <div class="floating-icon icon-4">⚙️</div>
-
-            <!-- Planta -->
             <div class="plant">🌿</div>
         </div>
     </section>
@@ -683,14 +871,12 @@
             <p>Apps e recursos para devs produtivos</p>
             <a href="#" class="feature-link">Ver dicas →</a>
         </div>
-
         <div class="feature-card">
             <div class="feature-icon">✅</div>
             <h3>Organização & Estudos</h3>
             <p>Dicas de estudos eficientes e organização</p>
             <a href="#" class="feature-link">Ver dicas →</a>
         </div>
-
         <div class="feature-card">
             <div class="feature-icon">📌</div>
             <h3>Templates Inteligentes</h3>
@@ -702,11 +888,13 @@
     <!-- DESTAQUES RECENTES -->
     <section class="recent-section">
         <h2>Destaques recentes</h2>
-        
+
         <div class="highlight-cards">
+
+            <!-- POST EXISTENTE 1 -->
             <div class="highlight-card">
                 <div class="highlight-image purple">
-                    <div class="highlight-badge">Ferramentee</div>
+                    <div class="highlight-badge">Ferramentas</div>
                     <div class="highlight-illustration">10</div>
                 </div>
                 <div class="highlight-content">
@@ -721,6 +909,7 @@
                 </div>
             </div>
 
+            <!-- POST EXISTENTE 2 -->
             <div class="highlight-card">
                 <div class="highlight-image purple">
                     <div class="highlight-badge">Produtividade</div>
@@ -737,6 +926,32 @@
                     </div>
                 </div>
             </div>
+
+            <!-- NOVO POST: Mulheres na Ciência -->
+            <div class="highlight-card">
+                <div class="highlight-image science-women">
+                    <div class="science-stars">
+                        <span></span><span></span><span></span><span></span>
+                        <span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="highlight-badge badge-rosa">Ciência & Diversidade</div>
+                    <div class="science-icon-group">
+                        <div class="science-emojis">🔬🌌🧬</div>
+                        <span class="science-label">Mulheres na ciência</span>
+                    </div>
+                </div>
+                <div class="highlight-content">
+                    <div>
+                        <h3>Mulheres brasileiras que marcaram a ciência na última década 💜</h3>
+                        <p>Do sequenciamento do coronavírus à genética que transforma vidas: conheça cientistas brasileiras que fizeram diferença real — e por que essas histórias importam.</p>
+                    </div>
+                    <div class="highlight-meta">
+                        <span class="highlight-date">Hoje</span>
+                        <button class="read-more" onclick="abrirModal()">Ler mais →</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -747,21 +962,106 @@
         <button class="btn-primary">Baixar checklist gratuito</button>
     </section>
 
+    <!-- ============ MODAL ============ -->
+    <div class="modal-overlay" id="modalOverlay" onclick="fecharModalOverlay(event)">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+
+            <div class="modal-header">
+                <div class="modal-header-stars">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <button class="modal-close" onclick="fecharModal()" aria-label="Fechar">✕</button>
+                <div class="modal-header-content">
+                    <span class="modal-badge">🔬 Ciência &amp; Diversidade</span>
+                    <h2 id="modalTitulo">Mulheres brasileiras que marcaram a ciência na última década 💜</h2>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-date">📅 Publicado hoje · Leitura: ~5 min</p>
+
+                <p class="modal-intro">
+                    Celebrar o Dia Internacional das Mulheres e Meninas na Ciência é lembrar que ciência não acontece só em laboratórios distantes ou livros difíceis. Ela acontece no dia a dia, nas universidades, nos hospitais, nos centros de pesquisa — e também é construída por mulheres brasileiras que fizeram (e fazem) diferença real.<br><br>
+                    Nos últimos 10 anos, várias cientistas brasileiras ganharam destaque por suas contribuições em áreas como saúde, genética, astronomia e tecnologia. Conhecer essas histórias importa porque <strong>referências mudam futuros</strong>.<br><br>
+                    A seguir, algumas mulheres que marcaram a ciência brasileira recentemente.
+                </p>
+
+                <div class="modal-scientist">
+                    <h3>🧬 Jaqueline Goes de Jesus</h3>
+                    <div class="scientist-subtitle">Ciência em tempo recorde</div>
+                    <p>Durante a pandemia da Covid-19, Jaqueline se tornou um dos nomes mais importantes da ciência no Brasil. Ela fez parte da equipe responsável por sequenciar o genoma do coronavírus no país em apenas 48 horas — um tempo extremamente rápido.</p>
+                    <br>
+                    <p>Esse trabalho foi essencial para entender como o vírus se espalhava e ajudou o Brasil a tomar decisões científicas mais embasadas. Além disso, Jaqueline também atua fortemente na divulgação científica e na formação de novos pesquisadores, especialmente mulheres negras na ciência.</p>
+                </div>
+
+                <div class="modal-scientist">
+                    <h3>🧪 Mayana Zatz</h3>
+                    <div class="scientist-subtitle">Genética que transforma vidas</div>
+                    <p>Mayana Zatz é uma das maiores referências em genética no Brasil. Seu trabalho ajudou a avançar pesquisas sobre doenças neuromusculares e condições genéticas raras, impactando diretamente a vida de muitas famílias.</p>
+                    <br>
+                    <p>Além da pesquisa científica, Mayana também é conhecida por tornar temas complexos mais acessíveis ao público, ajudando a aproximar a ciência das pessoas comuns — algo fundamental para uma sociedade mais informada.</p>
+                </div>
+
+                <div class="modal-scientist">
+                    <h3>🌌 Duilia de Mello</h3>
+                    <div class="scientist-subtitle">O universo explicado para todos</div>
+                    <p>Astrônoma brasileira com atuação internacional, Duilia de Mello se destaca não só por suas pesquisas, mas também pelo forte trabalho de divulgação científica. Ela ajuda a levar a astronomia para escolas, jovens e pessoas que nunca tiveram contato direto com ciência.</p>
+                    <br>
+                    <p>Seu trabalho mostra que ciência não é algo distante ou inacessível — é curiosidade, descoberta e aprendizado contínuo.</p>
+                </div>
+
+                <div class="modal-scientist">
+                    <h3>🌱 Silvia Massruhá</h3>
+                    <div class="scientist-subtitle">Tecnologia e inovação no campo</div>
+                    <p>Silvia Massruhá atua com tecnologia, inovação e transformação digital no agronegócio brasileiro. Seu trabalho mostra como ciência e tecnologia também estão presentes no campo, ajudando a tornar a produção mais eficiente e sustentável.</p>
+                    <br>
+                    <p>Essa área é essencial para o Brasil e reforça que ciência vai muito além dos estereótipos tradicionais.</p>
+                </div>
+
+                <div class="modal-conclusion">
+                    <h3>💜 Por que essas histórias importam?</h3>
+                    <p>Dar visibilidade às mulheres brasileiras na ciência é mais do que comemorar conquistas individuais. É mostrar para meninas e jovens que elas também pertencem a esses espaços.</p>
+                    <p>Quando vemos mulheres ocupando lugares de destaque na ciência, tecnologia e pesquisa, o futuro se torna mais diverso, mais justo e mais inovador. A ciência brasileira é mais forte quando inclui diferentes vozes, histórias e perspectivas.</p>
+                    <p>Celebrar as mulheres e meninas na ciência é reconhecer o que já foi construído e, ao mesmo tempo, reforçar a importância de continuar abrindo caminhos para quem vem depois. Porque ciência também é lugar de mulher. Sempre foi. 💜</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <script>
         // Menu responsivo
         document.querySelector('.menu-toggle').addEventListener('click', function() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
-    </script>
-      <!-- Vercel Analytics -->
-    <script defer src="https://cdn.vercel-analytics.com/v1/script.js"></script>
-    <script defer src="/_vercel/insights/script.js"></script>
-    <script>
-        // Vercel Web Analytics Configuration
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments) };
-         // ===== VERCEL ANALYTICS TRACKING =====
-        // Track button clicks
+
+        // Modal
+        function abrirModal() {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModal() {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function fecharModalOverlay(event) {
+            if (event.target === document.getElementById('modalOverlay')) {
+                fecharModal();
+            }
+        }
+
+        // Fechar com ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') fecharModal();
+        });
+
+        // ===== VERCEL ANALYTICS TRACKING =====
         document.querySelectorAll('.btn-primary, .btn-secondary, .btn-whatsapp').forEach(btn => {
             btn.addEventListener('click', function() {
                 if (window.va) {
@@ -773,16 +1073,12 @@
             });
         });
 
-        // Track scroll depth
         let maxScroll = 0;
         window.addEventListener('scroll', function() {
             const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            if (scrollPercentage > maxScroll) {
-                maxScroll = scrollPercentage;
-            }
+            if (scrollPercentage > maxScroll) maxScroll = scrollPercentage;
         });
 
-        // Track page scroll on leave
         window.addEventListener('beforeunload', function() {
             if (window.va) {
                 window.va('event', {
@@ -792,7 +1088,6 @@
             }
         });
 
-        // Track section views
         document.querySelectorAll('section').forEach(section => {
             const sectionObserver = new IntersectionObserver(function(entries) {
                 entries.forEach(entry => {
@@ -805,9 +1100,15 @@
                     }
                 });
             }, { threshold: 0.5 });
-            
             sectionObserver.observe(section);
         });
+    </script>
+
+    <!-- Vercel Analytics -->
+    <script defer src="https://cdn.vercel-analytics.com/v1/script.js"></script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments) };
     </script>
 </body>
 </html>

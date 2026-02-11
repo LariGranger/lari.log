@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Lari.log</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --roxo: #5B2EFF;
+            --verde: #3CFF9E;
+            --fundo: #F6F7FB;
+            --texto: #1E1E2E;
+            --cinza-leve: #E8EAEF;
+            --cinza-texto: #757575;
+            --branco: #FFFFFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--fundo);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        /* ============ NAVEGAÇÃO ============ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--texto);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo .roxo { color: var(--roxo); }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--roxo); }
+        .nav-links a.active { color: var(--roxo); font-weight: 600; }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .btn-header {
+            padding: 0.65rem 1.5rem;
+            background-color: #52B788;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-header:hover {
+            background-color: #40916c;
+            transform: translateY(-1px);
+        }
+
+        /* ============ PAGE HERO ============ */
+        .page-hero {
+            padding: 4rem 4rem;
+            background: linear-gradient(135deg, rgba(91, 46, 255, 0.08) 0%, rgba(82, 183, 136, 0.05) 100%);
+            border-bottom: 1px solid rgba(91, 46, 255, 0.1);
+        }
+
+        .page-hero-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 2rem;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--texto);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .page-hero h1 .roxo { color: var(--roxo); }
+
+        .page-hero p {
+            font-size: 1.05rem;
+            color: var(--cinza-texto);
+            line-height: 1.7;
+            max-width: 600px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--roxo);
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--cinza-texto);
+            font-weight: 500;
+            margin-top: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============ CONTROLES ============ */
+        .blog-controls {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2.5rem 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.55rem 1.2rem;
+            border: 1px solid #e8e8e8;
+            background: white;
+            border-radius: 25px;
+            font-size: 0.83rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--texto);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--roxo);
+            color: white;
+            border-color: var(--roxo);
+        }
+
+        .search-box {
+            position: relative;
+            width: 280px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.7rem 1.2rem 0.7rem 2.6rem;
+            border: 1px solid #f0f0f0;
+            border-radius: 25px;
+            font-size: 0.88rem;
+            background: white;
+            color: var(--texto);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--roxo);
+            box-shadow: 0 0 0 3px rgba(91, 46, 255, 0.1);
+        }
+
+        .search-box input::placeholder { color: var(--cinza-texto); }
+
+        .search-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.85rem;
+            color: var(--cinza-texto);
+            pointer-events: none;
+        }
+
+        /* ============ POST DESTAQUE ============ */
+        .featured-section {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4rem 3rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--roxo);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(91, 46, 255, 0.15);
+        }
+
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(91, 46, 255, 0.1);
+            border: 1.5px solid rgba(91, 46, 255, 0.12);
+            transition: box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .featured-post:hover {
+            box-shadow: 0 12px 32px rgba(91, 46, 255, 0.18);
+        }
+
+        .featured-post-image {
+            background: linear-gradient(135deg, #C84B9E 0%, #7B2D8B 50%, #4A1570 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 380px;
+            overflow: hidden;
+        }
+
+        .featured-post-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 25% 75%, rgba(255,180,220,0.2) 0%, transparent 55%),
+                        radial-gradient(ellipse at 80% 20%, rgba(180,100,255,0.2) 0%, transparent 50%);
+        }
+
+        .fp-stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .fp-stars span {
+            position: absolute;
+            display: block;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .fp-stars span:nth-child(1)  { width: 4px; height: 4px; top: 10%; left: 12%; animation-delay: 0s; }
+        .fp-stars span:nth-child(2)  { width: 3px; height: 3px; top: 22%; left: 78%; animation-delay: 0.4s; }
+        .fp-stars span:nth-child(3)  { width: 5px; height: 5px; top: 58%; left: 88%; animation-delay: 0.8s; }
+        .fp-stars span:nth-child(4)  { width: 3px; height: 3px; top: 38%; left: 52%; animation-delay: 1.2s; }
+        .fp-stars span:nth-child(5)  { width: 4px; height: 4px; top: 72%; left: 25%; animation-delay: 0.6s; }
+        .fp-stars span:nth-child(6)  { width: 3px; height: 3px; top: 85%; left: 65%; animation-delay: 1.8s; }
+        .fp-stars span:nth-child(7)  { width: 4px; height: 4px; top: 15%; left: 45%; animation-delay: 1.1s; }
+        .fp-stars span:nth-child(8)  { width: 3px; height: 3px; top: 48%; left: 8%;  animation-delay: 0.3s; }
+        .fp-stars span:nth-child(9)  { width: 5px; height: 5px; top: 30%; left: 92%; animation-delay: 1.5s; }
+        .fp-stars span:nth-child(10) { width: 3px; height: 3px; top: 92%; left: 40%; animation-delay: 0.9s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.35; transform: scale(1); }
+            50%       { opacity: 1;    transform: scale(1.7); }
+        }
+
+        .featured-post-image .img-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .img-emojis {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+            line-height: 1;
+        }
+
+        .img-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .fp-badge {
+            position: absolute;
+            top: 1.4rem;
+            left: 1.4rem;
+            background: white;
+            color: #C84B9E;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.73rem;
+            font-weight: 700;
+            z-index: 5;
+        }
+
+        .fp-new-badge {
+            position: absolute;
+            top: 1.4rem;
+            right: 1.4rem;
+            background: var(--verde);
+            color: #000;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.73rem;
+            font-weight: 700;
+            z-index: 5;
+        }
+
+        .featured-post-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .post-category-tag {
+            display: inline-block;
+            font-size: 0.73rem;
+            background: rgba(200, 75, 158, 0.1);
+            color: #C84B9E;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1.2rem;
+        }
+
+        .featured-post-content h2 {
+            font-size: 1.75rem;
+            color: var(--texto);
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.4px;
+            margin-bottom: 1.2rem;
+        }
+
+        .featured-post-content .post-excerpt {
+            color: var(--cinza-texto);
+            font-size: 0.95rem;
+            line-height: 1.75;
+            margin-bottom: 2rem;
+        }
+
+        .post-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .post-date {
+            font-size: 0.8rem;
+            color: var(--cinza-texto);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .post-read-time {
+            font-size: 0.8rem;
+            color: var(--cinza-texto);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .btn-read {
+            margin-left: auto;
+            padding: 0.7rem 1.5rem;
+            background: var(--roxo);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.87rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-read:hover {
+            background: #4a25d4;
+            transform: translateY(-2px);
+        }
+
+        /* ============ GRID DE POSTS ============ */
+        .posts-section {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4rem 5rem;
+        }
+
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .post-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .post-card:nth-child(1) { animation-delay: 0.05s; }
+        .post-card:nth-child(2) { animation-delay: 0.12s; }
+        .post-card:nth-child(3) { animation-delay: 0.19s; }
+        .post-card:nth-child(4) { animation-delay: 0.26s; }
+        .post-card:nth-child(5) { animation-delay: 0.33s; }
+        .post-card:nth-child(6) { animation-delay: 0.40s; }
+
+        .post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 24px rgba(91, 46, 255, 0.13);
+        }
+
+        .post-card-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .post-card-image.theme-purple {
+            background: linear-gradient(135deg, #6B5B95 0%, #8B6BB8 100%);
+        }
+
+        .post-card-image.theme-science {
+            background: linear-gradient(135deg, #C84B9E 0%, #7B2D8B 50%, #4A1570 100%);
+        }
+
+        .post-card-image.theme-green {
+            background: linear-gradient(135deg, #1B4332 0%, #40916C 100%);
+        }
+
+        .post-card-image.theme-blue {
+            background: linear-gradient(135deg, #1E3A5F 0%, #2563EB 100%);
+        }
+
+        .post-card-image.theme-orange {
+            background: linear-gradient(135deg, #7C2D12 0%, #EA580C 100%);
+        }
+
+        .post-card-image .card-stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .card-stars span {
+            position: absolute;
+            display: block;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .card-stars span:nth-child(1) { width: 3px; height: 3px; top: 15%; left: 15%; animation-delay: 0s; }
+        .card-stars span:nth-child(2) { width: 2px; height: 2px; top: 30%; left: 75%; animation-delay: 0.5s; }
+        .card-stars span:nth-child(3) { width: 3px; height: 3px; top: 65%; left: 85%; animation-delay: 1s; }
+        .card-stars span:nth-child(4) { width: 2px; height: 2px; top: 75%; left: 20%; animation-delay: 1.5s; }
+        .card-stars span:nth-child(5) { width: 3px; height: 3px; top: 45%; left: 50%; animation-delay: 0.8s; }
+
+        .card-icon {
+            position: relative;
+            z-index: 2;
+            font-size: 2.8rem;
+            filter: drop-shadow(0 3px 10px rgba(0,0,0,0.25));
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 0.9rem;
+            left: 0.9rem;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 5;
+        }
+
+        .card-new {
+            position: absolute;
+            top: 0.9rem;
+            right: 0.9rem;
+            background: var(--verde);
+            color: #000;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 5;
+        }
+
+        .post-card-body {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .post-card-category {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--roxo);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .post-card-body h3 {
+            font-size: 1rem;
+            color: var(--texto);
+            font-weight: 600;
+            line-height: 1.4;
+            letter-spacing: -0.2px;
+        }
+
+        .post-card-body p {
+            color: var(--cinza-texto);
+            font-size: 0.85rem;
+            line-height: 1.65;
+            flex-grow: 1;
+        }
+
+        .post-card-footer {
+            padding: 1rem 1.5rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f5f5f5;
+        }
+
+        .post-card-date {
+            font-size: 0.75rem;
+            color: var(--cinza-texto);
+        }
+
+        .post-card-link {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--roxo);
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: gap 0.3s ease;
+            text-decoration: none;
+        }
+
+        .post-card-link:hover {
+            gap: 0.6rem;
+        }
+
+        /* ============ EMPTY / NO RESULTS ============ */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--cinza-texto);
+            display: none;
+        }
+
+        .no-results-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* ============ MODAL ============ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 8, 30, 0.65);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 18px;
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 32px 80px rgba(91, 46, 255, 0.2), 0 8px 24px rgba(0,0,0,0.12);
+            transform: translateY(24px) scale(0.98);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+            opacity: 0;
+            scrollbar-width: thin;
+            scrollbar-color: #e0e0e0 transparent;
+        }
+
+        .modal::-webkit-scrollbar { width: 5px; }
+        .modal::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-header {
+            position: relative;
+            height: 220px;
+            background: linear-gradient(135deg, #C84B9E 0%, #7B2D8B 50%, #4A1570 100%);
+            border-radius: 18px 18px 0 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 20% 80%, rgba(255,180,220,0.25) 0%, transparent 55%),
+                        radial-gradient(ellipse at 85% 15%, rgba(180,100,255,0.25) 0%, transparent 50%);
+        }
+
+        .modal-header-stars {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .modal-header-stars span {
+            position: absolute;
+            display: block;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        .modal-header-stars span:nth-child(1)  { top: 12%; left: 8%;  animation-delay: 0s; }
+        .modal-header-stars span:nth-child(2)  { top: 20%; left: 75%; animation-delay: 0.4s; }
+        .modal-header-stars span:nth-child(3)  { top: 55%; left: 90%; animation-delay: 0.8s; }
+        .modal-header-stars span:nth-child(4)  { top: 35%; left: 50%; animation-delay: 1.2s; }
+        .modal-header-stars span:nth-child(5)  { top: 70%; left: 30%; animation-delay: 0.6s; }
+        .modal-header-stars span:nth-child(6)  { top: 8%;  left: 40%; animation-delay: 1.6s; }
+        .modal-header-stars span:nth-child(7)  { top: 50%; left: 15%; animation-delay: 1s; }
+        .modal-header-stars span:nth-child(8)  { top: 80%; left: 65%; animation-delay: 0.2s; }
+        .modal-header-stars span:nth-child(9)  { top: 25%; left: 92%; animation-delay: 1.9s; }
+        .modal-header-stars span:nth-child(10) { top: 65%; left: 5%;  animation-delay: 1.3s; }
+
+        .modal-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.35rem;
+            color: white;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.3px;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            z-index: 10;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.35);
+            transform: scale(1.1);
+        }
+
+        .modal-body { padding: 2.5rem; }
+
+        .modal-date {
+            font-size: 0.78rem;
+            color: var(--cinza-texto);
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .modal-intro {
+            font-size: 1rem;
+            color: var(--cinza-texto);
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .modal-scientist {
+            margin-bottom: 2rem;
+            padding: 1.6rem;
+            background: #FAFAFA;
+            border-radius: 12px;
+            border-left: 4px solid #C84B9E;
+        }
+
+        .modal-scientist h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.2px;
+        }
+
+        .modal-scientist .scientist-subtitle {
+            font-size: 0.8rem;
+            color: #C84B9E;
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .modal-scientist p {
+            font-size: 0.93rem;
+            color: var(--cinza-texto);
+            line-height: 1.7;
+        }
+
+        .modal-conclusion {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(200,75,158,0.06) 0%, rgba(123,45,139,0.06) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(200,75,158,0.15);
+        }
+
+        .modal-conclusion h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 1rem;
+        }
+
+        .modal-conclusion p {
+            font-size: 0.92rem;
+            color: var(--cinza-texto);
+            line-height: 1.75;
+            margin-bottom: 0.8rem;
+        }
+
+        .modal-conclusion p:last-child {
+            margin-bottom: 0;
+            font-weight: 500;
+            color: #7B2D8B;
+        }
+
+        /* ============ RESPONSIVIDADE ============ */
+        @media (max-width: 1200px) {
+            nav, .page-hero, .blog-controls, .featured-section, .posts-section { padding-left: 2rem; padding-right: 2rem; }
+            .posts-grid { grid-template-columns: repeat(2, 1fr); }
+            .featured-post { grid-template-columns: 1fr; }
+            .featured-post-image { min-height: 280px; }
+            .page-hero-content { flex-direction: column; align-items: flex-start; }
+            .hero-stats { gap: 2rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .page-hero { padding: 2rem 1.5rem; }
+            .page-hero h1 { font-size: 2rem; }
+            .blog-controls { padding: 1.5rem; flex-direction: column; align-items: stretch; }
+            .search-box { width: 100%; }
+            .featured-section, .posts-section { padding: 0 1.5rem 3rem; }
+            .posts-grid { grid-template-columns: 1fr; }
+            .featured-post-image { min-height: 220px; }
+            .featured-post-content { padding: 2rem 1.5rem; }
+            .featured-post-content h2 { font-size: 1.3rem; }
+            .post-meta-row { flex-wrap: wrap; gap: 0.8rem; }
+            .modal-body { padding: 1.5rem; }
+            .modal-header { height: 180px; padding: 1.5rem; }
+            .modal-header h2 { font-size: 1.1rem; }
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+        }
+
+        /* ============ ANIMAÇÕES ============ */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-hero-content { animation: fadeInUp 0.7s ease; }
+        .featured-post { animation: fadeInUp 0.7s ease 0.15s backwards; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVEGAÇÃO -->
+    <nav>
+        <a href="../index.html" class="logo">lari<span class="roxo">.log</span></a>
+        <ul class="nav-links">
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="/pages/ferramentas.html">Ferramentas</a></li>
+            <li><a href="/pages/estudos.html">Estudos</a></li>
+            <li><a href="/pages/templates.html">Templates</a></li>
+            <li><a href="/pages/blog.html" class="active">Blog</a></li>
+        </ul>
+        <button class="btn-header">Baixar checklist grátis</button>
+        <button class="menu-toggle">☰</button>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <div>
+                <h1>Blog <span class="roxo">& Conteúdo</span></h1>
+                <p>Artigos sobre produtividade, tecnologia, ciência e tudo que ajuda a estudar e programar melhor. Novos posts toda semana. ✨</p>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Publicações</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Categorias</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">~15</div>
+                    <div class="stat-label">Min de leitura</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTROLES -->
+    <div class="blog-controls">
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="ferramentas">🛠️ Ferramentas</button>
+            <button class="filter-btn" data-filter="produtividade">✅ Produtividade</button>
+            <button class="filter-btn" data-filter="ciencia">🔬 Ciência</button>
+        </div>
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Buscar posts..." id="searchInput">
+        </div>
+    </div>
+
+    <!-- POST DESTAQUE (Mulheres na Ciência — mais recente) -->
+    <section class="featured-section">
+        <div class="section-label">✨ Post mais recente</div>
+
+        <div class="featured-post" onclick="abrirModal()" data-category="ciencia">
+            <div class="featured-post-image">
+                <div class="fp-stars">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="fp-badge">🔬 Ciência & Diversidade</div>
+                <div class="fp-new-badge">✨ Novo</div>
+                <div class="img-content">
+                    <div class="img-emojis">🧬🌌🧪</div>
+                    <span class="img-tag">Mulheres na ciência</span>
+                </div>
+            </div>
+            <div class="featured-post-content">
+                <div>
+                    <span class="post-category-tag">🔬 Ciência & Diversidade</span>
+                    <h2>Mulheres brasileiras que marcaram a ciência na última década 💜</h2>
+                    <p class="post-excerpt">
+                        Do sequenciamento do coronavírus à genética que transforma vidas, da astronomia ao agronegócio — conheça cientistas brasileiras que fizeram diferença real nos últimos 10 anos e por que essas histórias importam para o futuro da ciência no Brasil.
+                    </p>
+                </div>
+                <div class="post-meta-row">
+                    <span class="post-date">📅 Hoje</span>
+                    <span class="post-read-time">⏱️ ~5 min de leitura</span>
+                    <button class="btn-read" onclick="abrirModal()">Ler agora →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GRID DE TODOS OS POSTS -->
+    <section class="posts-section">
+        <div class="section-label">📚 Todos os posts</div>
+
+        <div class="posts-grid" id="postsGrid">
+
+            <!-- POST: Mulheres na Ciência (também no grid) -->
+            <div class="post-card" data-category="ciencia" onclick="abrirModal()">
+                <div class="post-card-image theme-science">
+                    <div class="card-stars">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <span class="card-badge">Ciência</span>
+                    <span class="card-new">Novo ✨</span>
+                    <div class="card-icon">🧬</div>
+                </div>
+                <div class="post-card-body">
+                    <span class="post-card-category">🔬 Ciência & Diversidade</span>
+                    <h3>Mulheres brasileiras que marcaram a ciência na última década 💜</h3>
+                    <p>De Jaqueline Goes a Duilia de Mello: conheça quem está transformando a ciência no Brasil e por que essas histórias importam.</p>
+                </div>
+                <div class="post-card-footer">
+                    <span class="post-card-date">📅 Hoje</span>
+                    <button class="post-card-link" onclick="event.stopPropagation(); abrirModal()">Ler →</button>
+                </div>
+            </div>
+
+            <!-- POST: 10 ferramentas grátis -->
+            <div class="post-card" data-category="ferramentas">
+                <div class="post-card-image theme-purple">
+                    <span class="card-badge">Ferramentas</span>
+                    <div class="card-icon">💻</div>
+                </div>
+                <div class="post-card-body">
+                    <span class="post-card-category">🛠️ Ferramentas</span>
+                    <h3>10 ferramentas grátis para estudantes de programação</h3>
+                    <p>Sites essenciais para aprender programação e organizar seus estudos com mais produtividade. Curadoria testada e aprovada.</p>
+                </div>
+                <div class="post-card-footer">
+                    <span class="post-card-date">📅 2 dias atrás</span>
+                    <a href="#" class="post-card-link">Ler →</a>
+                </div>
+            </div>
+
+            <!-- POST: Notion para estudos tech -->
+            <div class="post-card" data-category="produtividade">
+                <div class="post-card-image theme-green">
+                    <span class="card-badge">Produtividade</span>
+                    <div class="card-icon">📚</div>
+                </div>
+                <div class="post-card-body">
+                    <span class="post-card-category">✅ Produtividade</span>
+                    <h3>Como organizar seus estudos tech no Notion</h3>
+                    <p>Aprenda a usar o Notion para estruturar seu aprendizado em programação e tecnologia com templates e sistemas prontos.</p>
+                </div>
+                <div class="post-card-footer">
+                    <span class="post-card-date">📅 4 dias atrás</span>
+                    <a href="#" class="post-card-link">Ler →</a>
+                </div>
+            </div>
+
+            <!-- Estado vazio para busca sem resultados -->
+            <div class="no-results" id="noResults">
+                <div class="no-results-icon">🔍</div>
+                <p>Nenhum post encontrado. Tente outra busca!</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============ MODAL: Mulheres na Ciência ============ -->
+    <div class="modal-overlay" id="modalOverlay" onclick="fecharModalOverlay(event)">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
+
+            <div class="modal-header">
+                <div class="modal-header-stars">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <button class="modal-close" onclick="fecharModal()" aria-label="Fechar">✕</button>
+                <div class="modal-header-content">
+                    <span class="modal-badge">🔬 Ciência &amp; Diversidade</span>
+                    <h2 id="modalTitulo">Mulheres brasileiras que marcaram a ciência na última década 💜</h2>
+                </div>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-date">📅 Publicado hoje · ⏱️ Leitura: ~5 min</p>
+
+                <p class="modal-intro">
+                    Celebrar o Dia Internacional das Mulheres e Meninas na Ciência é lembrar que ciência não acontece só em laboratórios distantes ou livros difíceis. Ela acontece no dia a dia, nas universidades, nos hospitais, nos centros de pesquisa — e também é construída por mulheres brasileiras que fizeram (e fazem) diferença real.<br><br>
+                    Nos últimos 10 anos, várias cientistas brasileiras ganharam destaque por suas contribuições em áreas como saúde, genética, astronomia e tecnologia. Conhecer essas histórias importa porque <strong>referências mudam futuros</strong>.<br><br>
+                    A seguir, algumas mulheres que marcaram a ciência brasileira recentemente.
+                </p>
+
+                <div class="modal-scientist">
+                    <h3>🧬 Jaqueline Goes de Jesus</h3>
+                    <div class="scientist-subtitle">Ciência em tempo recorde</div>
+                    <p>Durante a pandemia da Covid-19, Jaqueline se tornou um dos nomes mais importantes da ciência no Brasil. Ela fez parte da equipe responsável por sequenciar o genoma do coronavírus no país em apenas 48 horas — um tempo extremamente rápido.</p>
+                    <br>
+                    <p>Esse trabalho foi essencial para entender como o vírus se espalhava e ajudou o Brasil a tomar decisões científicas mais embasadas. Além disso, Jaqueline também atua fortemente na divulgação científica e na formação de novos pesquisadores, especialmente mulheres negras na ciência.</p>
+                </div>
+
+                <div class="modal-scientist">
+                    <h3>🧪 Mayana Zatz</h3>
+                    <div class="scientist-subtitle">Genética que transforma vidas</div>
+                    <p>Mayana Zatz é uma das maiores referências em genética no Brasil. Seu trabalho ajudou a avançar pesquisas sobre doenças neuromusculares e condições genéticas raras, impactando diretamente a vida de muitas famílias.</p>
+                    <br>
+                    <p>Além da pesquisa científica, Mayana também é conhecida por tornar temas complexos mais acessíveis ao público, ajudando a aproximar a ciência das pessoas comuns — algo fundamental para uma sociedade mais informada.</p>
+                </div>
+
+                <div class="modal-scientist">
+                    <h3>🌌 Duilia de Mello</h3>
+                    <div class="scientist-subtitle">O universo explicado para todos</div>
+                    <p>Astrônoma brasileira com atuação internacional, Duilia de Mello se destaca não só por suas pesquisas, mas também pelo forte trabalho de divulgação científica. Ela ajuda a levar a astronomia para escolas, jovens e pessoas que nunca tiveram contato direto com ciência.</p>
+                    <br>
+                    <p>Seu trabalho mostra que ciência não é algo distante ou inacessível — é curiosidade, descoberta e aprendizado contínuo.</p>
+                </div>
+
+                <div class="modal-scientist">
+                    <h3>🌱 Silvia Massruhá</h3>
+                    <div class="scientist-subtitle">Tecnologia e inovação no campo</div>
+                    <p>Silvia Massruhá atua com tecnologia, inovação e transformação digital no agronegócio brasileiro. Seu trabalho mostra como ciência e tecnologia também estão presentes no campo, ajudando a tornar a produção mais eficiente e sustentável.</p>
+                    <br>
+                    <p>Essa área é essencial para o Brasil e reforça que ciência vai muito além dos estereótipos tradicionais.</p>
+                </div>
+
+                <div class="modal-conclusion">
+                    <h3>💜 Por que essas histórias importam?</h3>
+                    <p>Dar visibilidade às mulheres brasileiras na ciência é mais do que comemorar conquistas individuais. É mostrar para meninas e jovens que elas também pertencem a esses espaços.</p>
+                    <p>Quando vemos mulheres ocupando lugares de destaque na ciência, tecnologia e pesquisa, o futuro se torna mais diverso, mais justo e mais inovador. A ciência brasileira é mais forte quando inclui diferentes vozes, histórias e perspectivas.</p>
+                    <p>Celebrar as mulheres e meninas na ciência é reconhecer o que já foi construído e, ao mesmo tempo, reforçar a importância de continuar abrindo caminhos para quem vem depois. Porque ciência também é lugar de mulher. Sempre foi. 💜</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Menu responsivo
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // ---- Modal ----
+        function abrirModal() {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function fecharModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function fecharModalOverlay(e) {
+            if (e.target === document.getElementById('modalOverlay')) fecharModal();
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModal(); });
+
+        // ---- Filtros de categoria ----
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const postCards  = document.querySelectorAll('.post-card');
+        const featured   = document.querySelector('.featured-post');
+        const noResults  = document.getElementById('noResults');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                // Post destaque
+                if (filter === 'all' || filter === 'ciencia') {
+                    featured.style.display = 'grid';
+                    document.querySelector('.featured-section').style.display = 'block';
+                } else {
+                    featured.style.display = 'none';
+                    document.querySelector('.featured-section').style.display = 'none';
+                }
+
+                let visibleCount = 0;
+                postCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            });
+        });
+
+        // ---- Busca ----
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const term = this.value.toLowerCase().trim();
+
+            let visibleCount = 0;
+            postCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc  = card.querySelector('p') ? card.querySelector('p').textContent.toLowerCase() : '';
+                const match = title.includes(term) || desc.includes(term);
+                card.style.display = match ? 'flex' : 'none';
+                if (match) visibleCount++;
+            });
+
+            // Destaque
+            const featuredTitle = featured.querySelector('h2').textContent.toLowerCase();
+            const featuredDesc  = featured.querySelector('.post-excerpt').textContent.toLowerCase();
+            if (featuredTitle.includes(term) || featuredDesc.includes(term)) {
+                document.querySelector('.featured-section').style.display = 'block';
+            } else {
+                document.querySelector('.featured-section').style.display = term === '' ? 'block' : 'none';
+            }
+
+            noResults.style.display = visibleCount === 0 && term !== '' ? 'block' : 'none';
+
+            // Reset todos se busca vazia
+            if (term === '') {
+                postCards.forEach(c => c.style.display = 'flex');
+                document.querySelector('.featured-section').style.display = 'block';
+                noResults.style.display = 'none';
+            }
+        });
+
+        // ---- Vercel Analytics ----
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments) };
+    </script>
+
+    <script defer src="https://cdn.vercel-analytics.com/v1/script.js"></script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
