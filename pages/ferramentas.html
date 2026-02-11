@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas - Lari.log</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --roxo: #5B2EFF;
+            --verde: #3CFF9E;
+            --fundo: #F6F7FB;
+            --texto: #1E1E2E;
+            --cinza-leve: #E8EAEF;
+            --cinza-texto: #757575;
+            --branco: #FFFFFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--fundo);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        /* ============ NAVEGAÇÃO ============ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            background: white;
+            border-bottom: none;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--texto);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo .roxo {
+            color: var(--roxo);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--roxo);
+        }
+
+        .nav-links a.active {
+            color: var(--roxo);
+            font-weight: 600;
+        }
+
+        .btn-header {
+            padding: 0.65rem 1.5rem;
+            background-color: #52B788;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-header:hover {
+            background-color: #40916c;
+        }
+
+        /* ============ HEADER DA PÁGINA ============ */
+        .page-hero {
+            padding: 4rem 4rem;
+            background: linear-gradient(135deg, rgba(91, 46, 255, 0.08) 0%, rgba(82, 183, 136, 0.05) 100%);
+            border-bottom: 1px solid rgba(91, 46, 255, 0.1);
+        }
+
+        .page-hero-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--texto);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .page-hero h1 .roxo {
+            color: var(--roxo);
+        }
+
+        .page-hero p {
+            font-size: 1.1rem;
+            color: var(--cinza-texto);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        /* ============ FILTROS E BUSCA ============ */
+        .tools-controls {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 2rem;
+            align-items: end;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: white;
+            color: var(--texto);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--roxo);
+            box-shadow: 0 0 0 3px rgba(91, 46, 255, 0.1);
+        }
+
+        .search-box input::placeholder {
+            color: var(--cinza-texto);
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #f0f0f0;
+            background: white;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--texto);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--roxo);
+            color: white;
+            border-color: var(--roxo);
+        }
+
+        /* ============ GRID DE FERRAMENTAS ============ */
+        .tools-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4rem 4rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(91, 46, 255, 0.15);
+        }
+
+        .tool-header {
+            padding: 2.5rem 2rem 1.5rem;
+            background: linear-gradient(135deg, rgba(91, 46, 255, 0.08) 0%, rgba(82, 183, 136, 0.05) 100%);
+            border-bottom: 1px solid rgba(91, 46, 255, 0.1);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .tool-header h3 {
+            font-size: 1.35rem;
+            color: var(--texto);
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .tool-category {
+            display: inline-block;
+            font-size: 0.75rem;
+            background: rgba(91, 46, 255, 0.1);
+            color: var(--roxo);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .tool-body {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .tool-description {
+            color: var(--cinza-texto);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .tool-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--roxo);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 0.9rem;
+            color: var(--texto);
+            font-weight: 500;
+        }
+
+        .tool-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            background: rgba(82, 183, 136, 0.1);
+            color: #52B788;
+            padding: 0.35rem 0.75rem;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+
+        .tool-footer {
+            display: flex;
+            gap: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+            margin-top: auto;
+        }
+
+        .btn-access {
+            flex: 1;
+            padding: 0.85rem 1.5rem;
+            background-color: var(--verde);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-access:hover {
+            background-color: #2fe083;
+            transform: translateY(-2px);
+        }
+
+        .btn-save {
+            padding: 0.85rem 1rem;
+            background: white;
+            color: var(--roxo);
+            border: 1.5px solid var(--roxo);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-save:hover {
+            background: var(--roxo);
+            color: white;
+        }
+
+        /* ============ BADGES ESPECIAIS ============ */
+        .badge-free {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--verde);
+            color: #000;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .badge-popular {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--roxo);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .tool-header {
+            position: relative;
+        }
+
+        /* ============ DESTAQUE EM BLOG ============ */
+        .featured-tool {
+            max-width: 1600px;
+            margin: 0 auto 4rem;
+            padding: 0 4rem;
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(91, 46, 255, 0.1);
+            border: 2px solid rgba(91, 46, 255, 0.2);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, var(--roxo) 0%, #8B5FFF 100%);
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 350px;
+        }
+
+        .featured-illustration {
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            background: white;
+            color: var(--roxo);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .featured-content {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .featured-content h2 {
+            font-size: 1.8rem;
+            color: var(--texto);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .featured-content p {
+            color: var(--cinza-texto);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .featured-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item strong {
+            color: var(--roxo);
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-item {
+            font-size: 0.95rem;
+            color: var(--texto);
+        }
+
+        .featured-footer {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .featured-footer .btn-access {
+            flex: 1;
+        }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--cinza-texto);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* ============ RESPONSIVIDADE ============ */
+        @media (max-width: 1200px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                padding: 0 2rem 3rem 2rem;
+                gap: 2rem;
+            }
+
+            .featured-card {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                min-height: 280px;
+            }
+
+            .tools-controls {
+                padding: 2rem;
+                grid-template-columns: 1fr;
+            }
+
+            .page-hero {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1.5rem 2rem 1.5rem;
+            }
+
+            .tools-controls {
+                padding: 2rem 1.5rem;
+            }
+
+            .featured-tool {
+                padding: 0 1.5rem;
+            }
+
+            .featured-image {
+                min-height: 220px;
+            }
+
+            .featured-illustration {
+                font-size: 4rem;
+            }
+
+            .featured-content {
+                padding: 2rem;
+            }
+
+            .featured-content h2 {
+                font-size: 1.4rem;
+            }
+
+            .featured-meta {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-footer {
+                flex-direction: column;
+            }
+
+            .category-filter {
+                flex-direction: column;
+            }
+
+            .filter-btn {
+                width: 100%;
+            }
+        }
+
+        /* ============ ANIMAÇÕES ============ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0.1s; }
+        .tool-card:nth-child(2) { animation-delay: 0.15s; }
+        .tool-card:nth-child(3) { animation-delay: 0.2s; }
+        .tool-card:nth-child(4) { animation-delay: 0.25s; }
+        .tool-card:nth-child(5) { animation-delay: 0.3s; }
+        .tool-card:nth-child(6) { animation-delay: 0.35s; }
+    </style>
+</head>
+<body>
+    <!-- NAVEGAÇÃO -->
+    <nav>
+        <a href="../index.html" class="logo">lari<span class="roxo">.log</span></a>
+         <ul class="nav-links">
+            <li><a href="../index.html" class="active">Início</a></li>
+            <li><a href="/pages/ferramentas.html">Ferramentas</a></li>
+            <li><a href="/pages/estudos.html">Estudos</a></li>
+            <li><a href="/pages/templates.html">Templates</a></li>
+            <li><a href="#">Sobre</a></li>
+        </ul>
+        <button class="btn-header">Baixar checklist grátis</button>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Ferramentas <span class="roxo">para estudar e programar</span></h1>
+            <p>Discover as melhores ferramentas gratuitas e pagas para desenvolvimento, produtividade e organização. Tudo curado com carinho.</p>
+        </div>
+    </section>
+
+    <!-- CONTROLES E BUSCA -->
+    <section class="tools-controls">
+        <div class="search-box">
+            <input type="text" placeholder="Buscar ferramentas, tags..." id="searchInput">
+        </div>
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="dev">Dev</button>
+            <button class="filter-btn" data-filter="produtividade">Produtividade</button>
+            <button class="filter-btn" data-filter="ia">IA</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+        </div>
+    </section>
+
+    <!-- DESTAQUE EM BLOG -->
+    <section class="featured-tool">
+        <div class="featured-card">
+            <div class="featured-image">
+                <div class="featured-badge">⭐ Em destaque</div>
+                <div class="featured-illustration">💻</div>
+            </div>
+            <div class="featured-content">
+                <div>
+                    <h2>GitHub - Seu portfólio de desenvolvededor</h2>
+                    <p>GitHub é essencial para todo programador. Controle de versão, colaboração em tempo real e portfólio profissional em um único lugar. Se você programa, GitHub é obrigatório.</p>
+                </div>
+                <div>
+                    <div class="featured-meta">
+                        <div class="meta-item">
+                            <strong>Tipo</strong>
+                            Controle de Versão
+                        </div>
+                        <div class="meta-item">
+                            <strong>Preço</strong>
+                            Gratuito
+                        </div>
+                    </div>
+                    <div class="featured-footer">
+                        <a href="https://github.com" target="_blank" class="btn-access">Acessar GitHub →</a>
+                        <button class="btn-save">💾</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GRID DE FERRAMENTAS -->
+    <section class="tools-grid" id="toolsGrid">
+        
+        <!-- NOTION -->
+        <div class="tool-card" data-category="produtividade">
+            <div class="tool-header">
+                <div class="tool-icon">📝</div>
+                <h3>Notion</h3>
+                <span class="tool-category">Produtividade</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">All-in-one workspace para organizar projetos, estudos, documentação e gerenciar conhecimento com templates.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Estudantes, Devs</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito + Pago</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">Organização</span>
+                    <span class="tag">Produtividade</span>
+                    <span class="tag">Templates</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://notion.so" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLAUDE AI -->
+        <div class="tool-card" data-category="ia">
+            <div class="tool-header">
+                <div class="tool-icon">🤖</div>
+                <h3>Claude AI</h3>
+                <span class="tool-category">IA</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">IA avançada para gerar código, revisar documentação, brainstorm e estudar com explicações detalhadas.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Devs, Estudantes</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito + Premium</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">IA</span>
+                    <span class="tag">Código</span>
+                    <span class="tag">Chat</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://claude.ai" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIGMA -->
+        <div class="tool-card" data-category="design">
+            <div class="tool-header">
+                <div class="tool-icon">🎨</div>
+                <h3>Figma</h3>
+                <span class="tool-category">Design</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">Design colaborativo em tempo real. Essencial para UX/UI, prototipos e documentação visual de projetos.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Designers, Devs</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito + Pago</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">Design</span>
+                    <span class="tag">Prototipagem</span>
+                    <span class="tag">Colaboração</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://figma.com" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VS CODE -->
+        <div class="tool-card" data-category="dev">
+            <div class="tool-header">
+                <div class="tool-icon">⚡</div>
+                <h3>VS Code</h3>
+                <span class="tool-category">Dev</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">Editor de código leve, poderoso e extensível. O padrão da indústria para desenvolvimento web e mobile.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Programadores</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">Editor</span>
+                    <span class="tag">Desenvolvimento</span>
+                    <span class="tag">Código</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://code.visualstudio.com" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXCALIDRAW -->
+        <div class="tool-card" data-category="design">
+            <div class="tool-header">
+                <div class="tool-icon">📊</div>
+                <h3>Excalidraw</h3>
+                <span class="tool-category">Design</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">Whiteboard online para diagramar arquitetura, fluxos e ideias de forma rápida e visual. Perfeito para brainstorm.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Devs, Planejadores</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">Whiteboard</span>
+                    <span class="tag">Diagramas</span>
+                    <span class="tag">Design</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://excalidraw.com" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CHATGPT -->
+        <div class="tool-card" data-category="ia">
+            <div class="tool-header">
+                <div class="tool-icon">💬</div>
+                <h3>ChatGPT</h3>
+                <span class="tool-category">IA</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">IA conversacional versátil para escritas, programação, análise de código e estudos. Acessível e intuitiva.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Todos</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito + Premium</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">IA</span>
+                    <span class="tag">Chat</span>
+                    <span class="tag">Código</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://openai.com/chatgpt" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OBSIDIAN -->
+        <div class="tool-card" data-category="produtividade">
+            <div class="tool-header">
+                <div class="tool-icon">🧠</div>
+                <h3>Obsidian</h3>
+                <span class="tool-category">Produtividade</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">Sistema de notas baseado em markdown com conexão de ideias. Perfeito para construir seu segundo cérebro.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Estudiosos</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito + Premium</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">Notas</span>
+                    <span class="tag">Markdown</span>
+                    <span class="tag">PKM</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://obsidian.md" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VSCODE EXTENSIONS -->
+        <div class="tool-card" data-category="dev">
+            <div class="tool-header">
+                <div class="tool-icon">🔌</div>
+                <h3>Live Server</h3>
+                <span class="tool-category">Dev</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">Extensão VS Code que lança servidor local com live reload. Essencial para desenvolvimento frontend rápido.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Devs Frontend</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">Extensão</span>
+                    <span class="tag">Frontend</span>
+                    <span class="tag">Dev Tools</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://marketplace.visualstudio.com" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DISCORD -->
+        <div class="tool-card" data-category="produtividade">
+            <div class="tool-header">
+                <div class="tool-icon">💎</div>
+                <h3>Discord</h3>
+                <span class="tool-category">Produtividade</span>
+            </div>
+            <div class="tool-body">
+                <p class="tool-description">Plataforma de comunicação perfeita para comunidades de devs, study groups e colaboração em tempo real.</p>
+                
+                <div class="tool-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Para quem</span>
+                        <span class="detail-value">Comunidades</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Preço</span>
+                        <span class="detail-value">Gratuito + Premium</span>
+                    </div>
+                </div>
+
+                <div class="tool-tags">
+                    <span class="tag">Comunicação</span>
+                    <span class="tag">Comunidade</span>
+                    <span class="tag">Chat</span>
+                </div>
+
+                <div class="tool-footer">
+                    <a href="https://discord.com" target="_blank" class="btn-access">Acessar</a>
+                    <button class="btn-save">💾</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        // Filtro de categorias
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const toolCards = document.querySelectorAll('.tool-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active de todos
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Adiciona active no clicado
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                toolCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'flex';
+                    } else {
+                        const category = card.getAttribute('data-category');
+                        card.style.display = category === filter ? 'flex' : 'none';
+                    }
+                });
+            });
+        });
+
+        // Busca
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            toolCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('.tool-description').textContent.toLowerCase();
+                
+                const matches = title.includes(searchTerm) || description.includes(searchTerm);
+                card.style.display = matches ? 'flex' : 'none';
+            });
+        });
+
+        // Botão de salvar (favorito)
+        const saveBtns = document.querySelectorAll('.btn-save');
+        saveBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.style.opacity = '0.6';
+                setTimeout(() => {
+                    btn.style.opacity = '1';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>

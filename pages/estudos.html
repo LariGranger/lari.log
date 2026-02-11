@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos & Produtividade - Lari.log</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --roxo: #5B2EFF;
+            --verde: #3CFF9E;
+            --fundo: #F6F7FB;
+            --texto: #1E1E2E;
+            --cinza-leve: #E8EAEF;
+            --cinza-texto: #757575;
+            --branco: #FFFFFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--fundo);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        /* ============ NAVEGAÇÃO ============ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            background: white;
+            border-bottom: none;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--texto);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo .roxo {
+            color: var(--roxo);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--roxo);
+        }
+
+        .nav-links a.active {
+            color: var(--roxo);
+            font-weight: 600;
+        }
+
+        .btn-header {
+            padding: 0.65rem 1.5rem;
+            background-color: #52B788;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-header:hover {
+            background-color: #40916c;
+        }
+
+        /* ============ PAGE HERO ============ */
+        .page-hero {
+            padding: 4rem 4rem;
+            background: linear-gradient(135deg, rgba(91, 46, 255, 0.08) 0%, rgba(82, 183, 136, 0.05) 100%);
+            border-bottom: 1px solid rgba(91, 46, 255, 0.1);
+        }
+
+        .page-hero-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--texto);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .page-hero h1 .roxo {
+            color: var(--roxo);
+        }
+
+        .page-hero p {
+            font-size: 1.1rem;
+            color: var(--cinza-texto);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        /* ============ FILTROS E BUSCA ============ */
+        .studies-controls {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 2rem;
+            align-items: end;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: white;
+            color: var(--texto);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--roxo);
+            box-shadow: 0 0 0 3px rgba(91, 46, 255, 0.1);
+        }
+
+        .search-box input::placeholder {
+            color: var(--cinza-texto);
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #f0f0f0;
+            background: white;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--texto);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--roxo);
+            color: white;
+            border-color: var(--roxo);
+        }
+
+        /* ============ GRID DE CARDS ============ */
+        .studies-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4rem 4rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        /* ============ ARTICLE CARDS - TODOS PEQUENOS E IGUAIS ============ */
+        .article-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(91, 46, 255, 0.12);
+        }
+
+        /* Estrela de destaque no topo */
+        .article-star {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            font-size: 1.5rem;
+            z-index: 5;
+            display: none;
+        }
+
+        .article-card.featured .article-star {
+            display: block;
+        }
+
+        .article-banner {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(91, 46, 255, 0.15) 0%, rgba(82, 183, 136, 0.08) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(91, 46, 255, 0.1);
+        }
+
+        .article-banner.banner-1 {
+            background: linear-gradient(135deg, #667BC6 0%, #7D8FD8 100%);
+        }
+
+        .article-banner.banner-2 {
+            background: linear-gradient(135deg, #8B6BB8 0%, #A587C4 100%);
+        }
+
+        .article-banner.banner-3 {
+            background: linear-gradient(135deg, #6B9E8F 0%, #7FBBA3 100%);
+        }
+
+        .article-banner.banner-4 {
+            background: linear-gradient(135deg, #D4A574 0%, #E0B896 100%);
+        }
+
+        .article-banner.banner-5 {
+            background: linear-gradient(135deg, #C97C7C 0%, #D89393 100%);
+        }
+
+        .article-banner.banner-6 {
+            background: linear-gradient(135deg, #7B8B9E 0%, #9BA4B5 100%);
+        }
+
+        .article-banner.banner-7 {
+            background: linear-gradient(135deg, #A87C9C 0%, #B89CB8 100%);
+        }
+
+        .article-banner.banner-8 {
+            background: linear-gradient(135deg, #7C9E9C 0%, #9CB5B0 100%);
+        }
+
+        .article-banner-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .article-badge {
+            position: absolute;
+            top: 0.8rem;
+            left: 0.8rem;
+            background: white;
+            color: var(--roxo);
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .article-content {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .article-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: rgba(91, 46, 255, 0.1);
+            color: var(--roxo);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+        }
+
+        .article-title {
+            font-size: 1.15rem;
+            color: var(--texto);
+            font-weight: 700;
+            line-height: 1.35;
+            letter-spacing: -0.3px;
+        }
+
+        .article-description {
+            font-size: 0.9rem;
+            color: var(--cinza-texto);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+            font-size: 0.8rem;
+            color: var(--cinza-texto);
+            margin-top: auto;
+        }
+
+        .article-date {
+            display: flex;
+            gap: 0.3rem;
+            align-items: center;
+        }
+
+        .read-more-link {
+            text-decoration: none;
+            color: var(--verde);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .read-more-link:hover {
+            gap: 0.8rem;
+        }
+
+        /* ============ RESPONSIVIDADE ============ */
+        @media (max-width: 1200px) {
+            .studies-grid {
+                padding: 0 2rem 3rem 2rem;
+                gap: 2rem;
+            }
+
+            .studies-controls {
+                padding: 2rem;
+                grid-template-columns: 1fr;
+            }
+
+            .page-hero {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .studies-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1.5rem 2rem 1.5rem;
+            }
+
+            .studies-controls {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* ============ ANIMAÇÕES ============ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.15s; }
+        .article-card:nth-child(3) { animation-delay: 0.2s; }
+        .article-card:nth-child(4) { animation-delay: 0.25s; }
+        .article-card:nth-child(5) { animation-delay: 0.3s; }
+        .article-card:nth-child(6) { animation-delay: 0.35s; }
+        .article-card:nth-child(7) { animation-delay: 0.4s; }
+        .article-card:nth-child(8) { animation-delay: 0.45s; }
+    </style>
+</head>
+<body>
+    <!-- NAVEGAÇÃO -->
+    <nav>
+        <a href="../index.html" class="logo">lari<span class="roxo">.log</span></a>
+      <ul class="nav-links">
+            <li><a href="../index.html" class="active">Início</a></li>
+            <li><a href="/pages/ferramentas.html">Ferramentas</a></li>
+            <li><a href="/pages/estudos.html">Estudos</a></li>
+            <li><a href="/pages/templates.html">Templates</a></li>
+            <li><a href="#">Sobre</a></li>
+        </ul>
+        <button class="btn-header">Baixar checklist grátis</button>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Estudos & <span class="roxo">Produtividade</span></h1>
+            <p>Guias práticos, dicas testadas e métodos de estudo que realmente funcionam. Tudo para você estudar melhor, aprender mais e programar sem caos.</p>
+        </div>
+    </section>
+
+    <!-- CONTROLES E BUSCA -->
+    <section class="studies-controls">
+        <div class="search-box">
+            <input type="text" placeholder="Buscar artigos, dicas..." id="searchInput">
+        </div>
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="estudo">Estudo</button>
+            <button class="filter-btn" data-filter="produtividade">Produtividade</button>
+            <button class="filter-btn" data-filter="rotina">Rotina</button>
+        </div>
+    </section>
+
+    <!-- GRID DE CARDS -->
+    <section class="studies-grid" id="studiesGrid">
+        
+        <!-- CARD 1 - DESTAQUE -->
+        <div class="article-card featured" data-category="estudo">
+            <div class="article-star">⭐</div>
+            <div class="article-banner banner-1">
+                <div class="article-badge">Novo</div>
+                <div class="article-banner-icon">📚</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Estudo</div>
+                <h3 class="article-title">Como estudar programação do zero sem se perder</h3>
+                <p class="article-description">Roteiro prático com linguagens recomendadas, plataformas e sequência de aprendizado.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 5 dias atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="article-card" data-category="rotina">
+            <div class="article-banner banner-2">
+                <div class="article-badge">Guia</div>
+                <div class="article-banner-icon">⏰</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Rotina</div>
+                <h3 class="article-title">Rotina para quem trabalha e estuda</h3>
+                <p class="article-description">Como conciliar trabalho, estudo e vida pessoal sem sacrificar qualidade em nenhuma área.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 3 dias atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="article-card" data-category="estudo">
+            <div class="article-banner banner-3">
+                <div class="article-badge">Artigo</div>
+                <div class="article-banner-icon">🧮</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Estudo</div>
+                <h3 class="article-title">Métodos de estudo para exatas</h3>
+                <p class="article-description">Técnicas comprovadas para matemática, física e lógica usando repetição espaçada.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 1 semana atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="article-card" data-category="produtividade">
+            <div class="article-banner banner-4">
+                <div class="article-badge">Dica</div>
+                <div class="article-banner-icon">✅</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Produtividade</div>
+                <h3 class="article-title">Organização semanal estruturada</h3>
+                <p class="article-description">Framework simples para planejar semana, alinhar metas e revisar progresso com consistência.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 2 semanas atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="article-card" data-category="estudo">
+            <div class="article-banner banner-5">
+                <div class="article-badge">Guia</div>
+                <div class="article-banner-icon">🎯</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Estudo</div>
+                <h3 class="article-title">Mantendo foco e evitando distrações</h3>
+                <p class="article-description">Estratégias práticas para lidar com procrastinação, redes sociais e manter disciplina.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 3 semanas atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 6 -->
+        <div class="article-card" data-category="produtividade">
+            <div class="article-banner banner-6">
+                <div class="article-badge">Artigo</div>
+                <div class="article-banner-icon">📖</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Produtividade</div>
+                <h3 class="article-title">Documentação: segredo dos bons devs</h3>
+                <p class="article-description">Por que documentar seu código melhora aprendizado, profissionalismo e trabalho em equipe.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 1 mês atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 7 -->
+        <div class="article-card" data-category="rotina">
+            <div class="article-banner banner-7">
+                <div class="article-badge">Dica</div>
+                <div class="article-banner-icon">💡</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Rotina</div>
+                <h3 class="article-title">Pomodoro vs Deep Work</h3>
+                <p class="article-description">Qual técnica é melhor para você? Comparamos prós e contras de cada metodologia de foco.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 2 meses atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 8 -->
+        <div class="article-card" data-category="estudo">
+            <div class="article-banner banner-8">
+                <div class="article-badge">Recurso</div>
+                <div class="article-banner-icon">💪</div>
+            </div>
+            <div class="article-content">
+                <div class="article-category">Estudo</div>
+                <h3 class="article-title">Desafio: 30 Dias de Código</h3>
+                <p class="article-description">Desafio prático para consistência: 30 dias codificando. Guia de como manter o hábito.</p>
+                <div class="article-meta">
+                    <div class="article-date">
+                        <span>📅 2 meses atrás</span>
+                    </div>
+                    <a href="#" class="read-more-link">Ler mais →</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        // Filtro de categorias
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const articleCards = document.querySelectorAll('.article-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active de todos
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Adiciona active no clicado
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                articleCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'flex';
+                    } else {
+                        const category = card.getAttribute('data-category');
+                        card.style.display = category === filter ? 'flex' : 'none';
+                    }
+                });
+            });
+        });
+
+        // Busca
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            articleCards.forEach(card => {
+                const title = card.querySelector('.article-title').textContent.toLowerCase();
+                const description = card.querySelector('.article-description').textContent.toLowerCase();
+                
+                const matches = title.includes(searchTerm) || description.includes(searchTerm);
+                card.style.display = matches ? 'flex' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

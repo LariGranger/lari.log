@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Templates - Lari.log</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --roxo: #5B2EFF;
+            --verde: #3CFF9E;
+            --fundo: #F6F7FB;
+            --texto: #1E1E2E;
+            --cinza-leve: #E8EAEF;
+            --cinza-texto: #757575;
+            --branco: #FFFFFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background-color: var(--fundo);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+
+        /* ============ NAVEGAÇÃO ============ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 4rem;
+            background: white;
+            border-bottom: none;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--texto);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo .roxo {
+            color: var(--roxo);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--roxo);
+        }
+
+        .nav-links a.active {
+            color: var(--roxo);
+            font-weight: 600;
+        }
+
+        .btn-header {
+            padding: 0.65rem 1.5rem;
+            background-color: #52B788;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-header:hover {
+            background-color: #40916c;
+        }
+
+        /* ============ PAGE HERO ============ */
+        .page-hero {
+            padding: 4rem 4rem;
+            background: linear-gradient(135deg, rgba(91, 46, 255, 0.08) 0%, rgba(82, 183, 136, 0.05) 100%);
+            border-bottom: 1px solid rgba(91, 46, 255, 0.1);
+        }
+
+        .page-hero-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--texto);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .page-hero h1 .roxo {
+            color: var(--roxo);
+        }
+
+        .page-hero p {
+            font-size: 1.1rem;
+            color: var(--cinza-texto);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        /* ============ FILTERS ============ */
+        .templates-controls {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 3rem 4rem;
+            display: grid;
+            grid-template-columns: 1fr 200px;
+            gap: 2rem;
+            align-items: end;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 1px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: white;
+            color: var(--texto);
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--roxo);
+            box-shadow: 0 0 0 3px rgba(91, 46, 255, 0.1);
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #f0f0f0;
+            background: white;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--texto);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--roxo);
+            color: white;
+            border-color: var(--roxo);
+        }
+
+        /* ============ GRID TEMPLATES ============ */
+        .templates-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 4rem 4rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+            background: var(--fundo);
+        }
+
+        /* ============ TEMPLATE CARD ============ */
+        .template-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .template-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(91, 46, 255, 0.15);
+        }
+
+        .template-preview {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(91, 46, 255, 0.1) 0%, rgba(82, 183, 136, 0.08) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .template-preview.notion {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .template-preview.canva {
+            background: linear-gradient(135deg, #00c4ff 0%, #92fe9d 100%);
+        }
+
+        .template-preview.excel {
+            background: linear-gradient(135deg, #217346 0%, #70ad47 100%);
+        }
+
+        .template-preview.figma {
+            background: linear-gradient(135deg, #f24e1e 0%, #a259a4 100%);
+        }
+
+        .template-icon {
+            font-size: 4rem;
+            color: rgba(91, 46, 255, 0.3);
+            line-height: 1;
+        }
+
+        .template-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--verde);
+            color: #000;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 5;
+        }
+
+        .template-badge.premium {
+            background: var(--roxo);
+            color: white;
+        }
+
+        .template-badge.pro {
+            background: #FFB700;
+            color: #000;
+        }
+
+        .template-content {
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .template-type {
+            display: inline-block;
+            font-size: 0.7rem;
+            background: rgba(91, 46, 255, 0.1);
+            color: var(--roxo);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            margin-bottom: 0.5rem;
+        }
+
+        .template-card h3 {
+            font-size: 1.1rem;
+            color: var(--texto);
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.2px;
+        }
+
+        .template-description {
+            font-size: 0.9rem;
+            color: var(--cinza-texto);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .template-meta {
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--cinza-texto);
+            margin-top: auto;
+        }
+
+        .template-price {
+            font-size: 1.1rem;
+            color: var(--roxo);
+            font-weight: 700;
+        }
+
+        .template-footer {
+            display: flex;
+            gap: 0.8rem;
+            padding-top: 1rem;
+            margin-top: auto;
+        }
+
+        .btn-download {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            background-color: var(--verde);
+            color: #000;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+
+        .btn-download:hover {
+            background-color: #2fe083;
+            transform: translateY(-1px);
+        }
+
+        .btn-buy {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            background-color: var(--roxo);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+
+        .btn-buy:hover {
+            background-color: #4A1FCC;
+            transform: translateY(-1px);
+        }
+
+        /* ============ RESPONSIVIDADE ============ */
+        @media (max-width: 1200px) {
+            .templates-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                padding: 0 2rem 3rem 2rem;
+                gap: 2rem;
+            }
+
+            .templates-controls {
+                padding: 2rem;
+                grid-template-columns: 1fr;
+            }
+
+            .page-hero {
+                padding: 3rem 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .page-hero {
+                padding: 2rem 1.5rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .templates-grid {
+                grid-template-columns: 1fr;
+                padding: 0 1.5rem 2rem 1.5rem;
+            }
+
+            .templates-controls {
+                padding: 2rem 1.5rem;
+            }
+
+            .template-preview {
+                height: 160px;
+            }
+
+            .template-content {
+                padding: 1.5rem;
+            }
+
+            .template-card h3 {
+                font-size: 1rem;
+            }
+        }
+
+        /* ============ ANIMAÇÕES ============ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .template-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .template-card:nth-child(1) { animation-delay: 0.1s; }
+        .template-card:nth-child(2) { animation-delay: 0.15s; }
+        .template-card:nth-child(3) { animation-delay: 0.2s; }
+        .template-card:nth-child(4) { animation-delay: 0.25s; }
+        .template-card:nth-child(5) { animation-delay: 0.3s; }
+        .template-card:nth-child(6) { animation-delay: 0.35s; }
+    </style>
+</head>
+<body>
+    <!-- NAVEGAÇÃO -->
+    <nav>
+        <a href="../index.html" class="logo">lari<span class="roxo">.log</span></a>
+       <ul class="nav-links">
+            <li><a href="../index.html" class="active">Início</a></li>
+            <li><a href="/pages/ferramentas.html">Ferramentas</a></li>
+            <li><a href="/pages/estudos.html">Estudos</a></li>
+            <li><a href="/pages/templates.html">Templates</a></li>
+            <li><a href="#">Sobre</a></li>
+        </ul>
+        <button class="btn-header">Baixar checklist grátis</button>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Templates <span class="roxo">Prontos para Usar</span></h1>
+            <p>Descubra uma coleção curada de templates para Notion, Canva, Excel, Figma e mais. Estruturas profissionais que economizam horas de trabalho.</p>
+        </div>
+    </section>
+
+    <!-- CONTROLES -->
+    <section class="templates-controls">
+        <div class="search-box">
+            <input type="text" placeholder="Buscar templates..." id="searchInput">
+        </div>
+        <div class="category-filter">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="notion">Notion</button>
+            <button class="filter-btn" data-filter="canva">Canva</button>
+            <button class="filter-btn" data-filter="excel">Excel</button>
+            <button class="filter-btn" data-filter="figma">Figma</button>
+        </div>
+    </section>
+
+    <!-- GRID TEMPLATES -->
+    <section class="templates-grid" id="templatesGrid">
+        
+        <!-- NOTION 1 - GRATUITO -->
+        <div class="template-card" data-type="notion">
+            <div class="template-preview notion">
+                <div class="template-badge">Grátis</div>
+                <div class="template-icon">📋</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Notion</span>
+                <h3>Checklist Estudo</h3>
+                <p class="template-description">Sistema organizado para rastrear seus estudos com metas diárias, progresso semanal e análise de hábitos.</p>
+                <div class="template-meta">
+                    <span>Estudo</span>
+                    <span class="template-price">Grátis</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-download">📥 Duplicar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CANVA 1 -->
+        <div class="template-card" data-type="canva">
+            <div class="template-preview canva">
+                <div class="template-badge pro">Pro</div>
+                <div class="template-icon">🎨</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Canva</span>
+                <h3>Planner Semanal</h3>
+                <p class="template-description">Planner visual semanal com seções para tarefas, metas, notas e reflexão. Pronto para imprimir ou usar digital.</p>
+                <div class="template-meta">
+                    <span>Produtividade</span>
+                    <span class="template-price">R$ 37</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-buy">🛒 Comprar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTION 2 - PRO -->
+        <div class="template-card" data-type="notion">
+            <div class="template-preview notion">
+                <div class="template-badge premium">Pro</div>
+                <div class="template-icon">🎯</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Notion</span>
+                <h3>Sistema Produtivo Completo</h3>
+                <p class="template-description">Workspace integrado com projetos, tarefas, hábitos, saúde e financeiro. Sistema de produtividade 360°.</p>
+                <div class="template-meta">
+                    <span>Produtividade</span>
+                    <span class="template-price">R$ 97</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-buy">🛒 Comprar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXCEL 1 -->
+        <div class="template-card" data-type="excel">
+            <div class="template-preview excel">
+                <div class="template-badge">Grátis</div>
+                <div class="template-icon">📊</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Excel</span>
+                <h3>Rastreador de Hábitos</h3>
+                <p class="template-description">Planilha visual para acompanhar seus hábitos diários com gráficos automáticos de progresso. Simples e eficaz.</p>
+                <div class="template-meta">
+                    <span>Hábitos</span>
+                    <span class="template-price">Grátis</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-download">📥 Baixar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIGMA 1 -->
+        <div class="template-card" data-type="figma">
+            <div class="template-preview figma">
+                <div class="template-badge pro">Pro</div>
+                <div class="template-icon">🎭</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Figma</span>
+                <h3>Design System Produtividade</h3>
+                <p class="template-description">Sistema de componentes e cores para criar seus próprios templates. Inclui UI kit completo e guia de estilos.</p>
+                <div class="template-meta">
+                    <span>Design</span>
+                    <span class="template-price">R$ 67</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-buy">🛒 Comprar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CANVA 2 -->
+        <div class="template-card" data-type="canva">
+            <div class="template-preview canva">
+                <div class="template-badge pro">Pro</div>
+                <div class="template-icon">📅</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Canva</span>
+                <h3>Planificador Mensal</h3>
+                <p class="template-description">Calendário mensal com seções para metas, notas e reflexão. Design moderno e minimalista.</p>
+                <div class="template-meta">
+                    <span>Planejamento</span>
+                    <span class="template-price">R$ 29</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-buy">🛒 Comprar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXCEL 2 -->
+        <div class="template-card" data-type="excel">
+            <div class="template-preview excel">
+                <div class="template-badge pro">Pro</div>
+                <div class="template-icon">💰</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Excel</span>
+                <h3>Orçamento Financeiro</h3>
+                <p class="template-description">Planilha completa de controle financeiro com gráficos, receitas, despesas e projeções. Totalmente automatizada.</p>
+                <div class="template-meta">
+                    <span>Finanças</span>
+                    <span class="template-price">R$ 47</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-buy">🛒 Comprar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOTION 3 - DEV -->
+        <div class="template-card" data-type="notion">
+            <div class="template-preview notion">
+                <div class="template-badge premium">Pro</div>
+                <div class="template-icon">💻</div>
+            </div>
+            <div class="template-content">
+                <span class="template-type">Notion</span>
+                <h3>Dev Workspace</h3>
+                <p class="template-description">Workspace para devs com projetos, bugs, snippets, documentação técnica e roadmap de features.</p>
+                <div class="template-meta">
+                    <span>Dev</span>
+                    <span class="template-price">R$ 127</span>
+                </div>
+                <div class="template-footer">
+                    <a href="#" class="btn-buy">🛒 Comprar</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        // Filtro
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const templateCards = document.querySelectorAll('.template-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                templateCards.forEach(card => {
+                    if (filter === 'all') {
+                        card.style.display = 'flex';
+                    } else {
+                        const type = card.getAttribute('data-type');
+                        card.style.display = type === filter ? 'flex' : 'none';
+                    }
+                });
+            });
+        });
+
+        // Busca
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            templateCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('.template-description').textContent.toLowerCase();
+                
+                const matches = title.includes(searchTerm) || description.includes(searchTerm);
+                card.style.display = matches ? 'flex' : 'none';
+            });
+        });
+
+        // Menu responsivo
+        document.querySelector('.menu-toggle')?.addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+</body>
+</html>
